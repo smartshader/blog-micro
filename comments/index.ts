@@ -14,7 +14,7 @@ interface comment {
     content: string;
 }
 
-const commentsByPostId: {[id: string]: comment[]} = {};
+const commentsByPostId: Record<string, comment[]> = {};
 
 app.get('/posts/:id/comments', (req, res) => {
     res.send(commentsByPostId[req.params.id] || []);

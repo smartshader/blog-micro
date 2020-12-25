@@ -15,7 +15,7 @@ interface Post {
     title: string;
 }
 
-const posts: {[id: string]: Post} = {};
+const posts: Record<string, Post> = {};
 
 app.get('/posts', (req, res) => {
     res.send(posts);
