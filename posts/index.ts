@@ -2,11 +2,13 @@ import express from 'express';
 import { randomBytes } from "crypto";
 import { StatusCodes } from "http-status-codes";
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 const PORT = 4000;
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 
 interface Post {
     id: string;

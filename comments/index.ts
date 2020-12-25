@@ -1,11 +1,13 @@
 import express from 'express';
 import bodyParser from "body-parser";
 import { randomBytes } from "crypto";
+import cors from 'cors';
 
 const PORT = 4001;
 
 const app = express();
 app.use(bodyParser.json())
+app.use(cors());
 
 interface comment {
     id: string;
