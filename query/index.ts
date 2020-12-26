@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
+import axios from "axios";
 
 const PORT = 4002;
 
@@ -27,13 +28,7 @@ interface post {
 
 const posts: Record<string, post> = {};
 
-app.get('/posts', (req, res) => {
-    res.send(posts);
-});
-
-app.post('/events', (req, res) => {
-    const { type, data }: event = req.body;
-
+const handleEvent = ({type, data}: event) => {
     if (type === 'PostCreated') {
         const { id, title } = data;
         posts[id] = { id, title, comments: [] }
@@ -53,10 +48,23 @@ app.post('/events', (req, res) => {
             comment.content = content;
         }
     }
+}
 
+app.get('/posts', (req, res) => {
+    res.send(posts);
+});
+
+app.post('/events', (req, res) => {
+    handleEvent(req.body);
     res.send({});
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
     console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
+
+    const res = await axios.get<event[]>('http://localhost:4005/events');
+    res.data.forEach((e: event) => {
+        console.log('Processing event: ', e.type);
+        handleEvent(e);
+    })
 });
