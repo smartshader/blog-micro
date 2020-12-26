@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from "body-parser";
 import { randomBytes } from "crypto";
 import cors from 'cors';
+import axios from "axios";
 
 const PORT = 4001;
 
@@ -12,6 +13,11 @@ app.use(cors());
 interface comment {
     id: string;
     content: string;
+}
+
+interface event {
+    type: string;
+    data: any;
 }
 
 const commentsByPostId: Record<string, comment[]> = {};
@@ -28,8 +34,24 @@ app.post('/posts/:id/comments', (req, res) => {
     comments.push({ id: commentId, content })
     commentsByPostId[req.params.id] = comments;
 
+    axios.post<event>('http://localhost:4005/events', {
+        type: 'CommentCreated',
+        data: {
+            id: commentId,
+            content,
+            postId: req.params.id
+        }
+    });
+
     res.status(201);
     res.send(comments);
+});
+
+app.post('/events', (req, res) => {
+    const event: event = req.body;
+    console.log('Received Event', event.type);
+
+    res.send({});
 });
 
 app.listen(PORT, () => {
