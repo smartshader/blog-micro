@@ -7,21 +7,10 @@ interface comment {
 }
 
 interface Props {
-    postId: string;
+    comments: comment[];
 }
 
-export const CommentList: React.FC<Props> = ({postId}) => {
-    const [comments, setComments] = useState<comment[]>([]);
-
-    const fetchComments = async () => {
-        const res: AxiosResponse = await axios.get(`http://localhost:4001/posts/${postId}/comments`);
-        setComments(res.data);
-    }
-
-    useEffect(() => {
-        fetchComments();
-    }, [])
-
+export const CommentList: React.FC<Props> = ({comments}) => {
     const renderedComments = comments.map(comment => {
         return <li key={comment.id}>{comment.content}</li>;
     });
