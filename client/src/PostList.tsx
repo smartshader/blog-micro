@@ -2,17 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import { CommentCreate } from "./CommentCreate";
 import { CommentList } from "./CommentList";
-
-interface Comment {
-    id: string;
-    content: string;
-}
-
-interface Post {
-    id: string;
-    title: string;
-    comments: Comment[];
-}
+import { Post } from "./types";
 
 export const PostList = () => {
     const [posts, setPosts] = useState<Record<string, Post>>({});

@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from "react";
-import axios, { AxiosResponse } from "axios";
+import React from "react";
+import { Comment } from "./types";
 
-interface comment {
-    id: string;
-    content: string;
-}
 
 interface Props {
-    comments: comment[];
+    comments: Comment[];
 }
 
 export const CommentList: React.FC<Props> = ({comments}) => {
