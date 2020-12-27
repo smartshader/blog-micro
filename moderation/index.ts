@@ -23,7 +23,7 @@ app.post('/events', (req, res) => {
 
     if (type === 'CommentCreated') {
         const status = data.content.includes('orange') ? Status.REJECTED : Status.APPROVED;
-        axios.post('http://localhost:4005/events', {
+        axios.post('http://eventbus:4005/events', {
             type: 'CommentModerated',
             data: {
                 ...data,

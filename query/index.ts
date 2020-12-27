@@ -62,7 +62,7 @@ app.post('/events', (req, res) => {
 app.listen(PORT, async () => {
     console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
 
-    const res = await axios.get<event[]>('http://localhost:4005/events');
+    const res = await axios.get<event[]>('http://eventbus:4005/events');
     res.data.forEach((e: event) => {
         console.log('Processing event: ', e.type);
         handleEvent(e);
