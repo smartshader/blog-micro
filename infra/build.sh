@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+cd ../client || exit
+docker build -t smartshader/client .
+
 cd ../posts || exit
 docker build -t smartshader/posts .
 

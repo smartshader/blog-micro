@@ -8,7 +8,7 @@ export const PostList = () => {
     const [posts, setPosts] = useState<Record<string, Post>>({});
 
     const fetchPosts = async () => {
-        const res: AxiosResponse = await axios.get('http://localhost:4002/posts');
+        const res: AxiosResponse = await axios.get('http://blog.local/posts');
         setPosts(res.data);
     };
 
